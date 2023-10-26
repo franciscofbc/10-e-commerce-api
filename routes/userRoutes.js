@@ -17,11 +17,11 @@ router
   .route('/')
   .get(authenticateUser, authorizePermissions('admin', 'user'), getAllUsers);
 router.route('/showMe').get(authenticateUser, showCurrentUser);
-router.route('/updateUser').patch(updateUser);
+router.route('/updateUser').patch(authenticateUser, updateUser);
 router.route('/updateUserPassword').patch(authenticateUser, updateUserPassword);
 //always the last one
 router
   .route('/:id')
-  .get(authenticateUser, authorizePermissions('admin', 'owner'), getSingleUser);
+  .get(authenticateUser, authorizePermissions('admin', 'user'), getSingleUser);
 
 module.exports = router;
