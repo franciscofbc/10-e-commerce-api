@@ -19,7 +19,7 @@ const getAllProducts = async (req, res) => {
 //get single product
 const getSingleProduct = async (req, res) => {
   const { id: productId } = req.params;
-  const product = await Product.findOne({ _id: productId });
+  const product = await Product.findOne({ _id: productId }).populate('reviews');
   //??????
   if (!product) {
     throw new CustomError.NotFoundError(`no product with id: ${productId}`);
@@ -49,6 +49,8 @@ const deleteProduct = async (req, res) => {
   if (!product) {
     throw new CustomError.NotFoundError(`no product with id: ${productId}`);
   }
+
+  //trigger the hook in model product
   await product.remove();
   res.status(StatusCodes.OK).json({ msg: 'product removed' });
 };
