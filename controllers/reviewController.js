@@ -71,6 +71,7 @@ const updateReview = async (req, res) => {
   review.comment = comment;
 
   //findAndUpdate???
+  //answer: trigger hook
   await review.save();
 
   res.status(StatusCodes.OK).json({ review });
@@ -87,6 +88,7 @@ const deleteReview = async (req, res) => {
 
   checkPermissions(req.user, review.user);
 
+  //trigger hook
   await review.remove();
 
   res.status(StatusCodes.OK).json({ msg: 'review removed' });
